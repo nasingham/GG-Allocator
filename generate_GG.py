@@ -323,7 +323,7 @@ if uploaded_file is not None:
                         st.markdown(f"### Total: {count_per_group} ")
                         for member in group:
                             if member["Role"] != "Member":
-                                st.write(f"**{member["Names"]}**")
+                                st.write(f"**{member['Names']}**")
                             else:
                                 st.write(member["Names"])
                             count_per_timeslot+=1

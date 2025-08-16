@@ -5,7 +5,7 @@ from datetime import datetime
 import io
 import networkx as nx
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 st.title("Edit GGL/TTM Roster")
 
 graph = nx.Graph()
