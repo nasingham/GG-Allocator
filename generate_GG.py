@@ -348,6 +348,8 @@ if uploaded_file is not None:
                 st.warning("Graph has no nodes to export.")
             else:
                 member_keys = list(graph.nodes[sample_node]['data'].keys())
+                member_keys.append("Preferred Partner")
+                print("member keys", member_keys)
 
                 output_path = "data/growth_groups_export.xlsx"
                 writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
@@ -389,13 +391,18 @@ if uploaded_file is not None:
                     # Sort leaders first
                     leaders = [m for m in group_members if m.get('Role') in ['GGL', 'TT Member']]
                     members_ = [m for m in group_members if m.get('Role') == 'Member']
+                    # print(members_[0])
                     ordered_members = leaders + members_
+                    # print(ordered_members[5])
 
                     for r_idx, member in enumerate(ordered_members):
                         for c_idx, key in enumerate(member_keys):
+                            # print("member",member)
                             val = member.get(key, "")
+                            # print(val)
                             if isinstance(val, list):
                                 val = ", ".join(str(x) for x in val)
+                            # print(val)
                             if key == 'Names' and member.get('Role') in ['GGL', 'TT Member']:
                                 ws.write(start_row + r_idx, start_col + c_idx, val, bold_name_format)
                             else:
@@ -448,6 +455,7 @@ if uploaded_file is not None:
                     for group_idx, group_members in enumerate(group_list):
                         group_start_row = 1 + group_idx * (max_rows_per_group + 3)
                         group_name = f"Group {group_idx + 1}"
+                        # print(group_members[5])
                         write_group_box(worksheet, group_start_row, col_idx * 15, group_members, group_name)
 
                 # After writing all data, set column widths based on collected max widths
