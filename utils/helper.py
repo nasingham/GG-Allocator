@@ -8,7 +8,7 @@ def calculate_year(year_of_matriculation):
         return 'Staff'
     if str(year_of_matriculation).lower() == 'exchange student':
         return 'Exchange Student'
-    return datetime.now().year - int(year_of_matriculation)
+    return datetime.now().year - int(year_of_matriculation)+1
 
 
 

@@ -64,7 +64,7 @@ def confirm_leaders():
 
 
 
-file_path = "data/confirmed_roster.csv"
+file_path = "data/confirmed_roster_test.csv"
 
 loaded = False
 
