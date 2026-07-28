@@ -61,8 +61,12 @@ if signup_file:
 
     signup_df["Telegram Handle"] = signup_df["Telegram Handle"].str.lower()
     signup_df['Year'] = signup_df['Year'].apply(utils.helper.calculate_year)
-    unique_timeslots = list(set(slot for sublist in signup_df['Timeslots'] for slot in sublist))
     weekday_order = {"Mon": 0, "Tue": 1, "Wed": 2, "Thu": 3, "Fri": 4, "Sat": 5, "Sun": 6}
+    unique_timeslots = list(set(slot for sublist in signup_df['Timeslots'] for slot in sublist))
+    unique_timeslots = [
+        slot for slot in unique_timeslots
+        if isinstance(slot, str) and len(slot.split()) >= 2 and slot.split()[0] in weekday_order
+    ]
     unique_timeslots = sorted(unique_timeslots, key=lambda x: (
         weekday_order[x.split()[0]],
         datetime.strptime(x.split()[1], "%I.%M%p")
