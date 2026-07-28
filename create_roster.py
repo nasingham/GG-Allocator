@@ -4,6 +4,7 @@ import utils.helper
 from datetime import datetime
 import io
 import networkx as nx
+import os
 
 # st.set_page_config(layout="wide")
 st.title("Edit GGL/TTM Roster")
@@ -53,7 +54,10 @@ if signup_file:
     signup_df = pd.read_csv(signup_file)
     signup_df = signup_df.iloc[:,2:9]
     signup_df.columns = ["Name", "Telegram Handle", "Gender", "Year", "School", "Role", "Timeslots"]
-    signup_df['Timeslots'] = signup_df['Timeslots'].apply(lambda x: [item.strip() for item in x.split(',')])
+    # row = signup_df[signup_df['Timeslots'].apply(lambda x: isinstance(x, float))]
+    # print("test", row)
+    signup_df['Timeslots'] = str(signup_df['Timeslots'])
+    signup_df['Timeslots'].apply(lambda x: [item.strip() for item in x.split(',')])
 
     signup_df["Telegram Handle"] = signup_df["Telegram Handle"].str.lower()
     signup_df['Year'] = signup_df['Year'].apply(utils.helper.calculate_year)
@@ -254,6 +258,7 @@ if signup_file:
                 st.session_state.leader_df = confirmed_df
                 st.session_state.timeslot_dict = timeslot_dict
                 output_path = "data/confirmed_roster_test.csv"  # save in /data folder
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
                 confirmed_df.to_csv(output_path, index=False)
                 st.success(f"Roster saved to {output_path}")
                 # st.write(timeslot_dict)

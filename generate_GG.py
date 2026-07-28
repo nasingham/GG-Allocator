@@ -146,6 +146,8 @@ if uploaded_file is not None:
     members = pd.read_csv(uploaded_file)
     members = members.iloc[:, 1:9]
     members.columns = ["Names", "Telehandle", "Gender", "Year of Matriculation", "School", "Email", "Timeslots", "Preferred Partners"]
+    row = members[members['Timeslots'].apply(lambda x: isinstance(x, float))]
+    print(row)
     members['Timeslots'] = members['Timeslots'].apply(lambda x: [item.strip() for item in x.split(',')])
     members["Preferred Partners"] = members["Preferred Partners"].apply(
         lambda x: [item.strip() for item in str(x).split(',')] if pd.notna(x) else []
