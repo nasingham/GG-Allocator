@@ -56,8 +56,8 @@ if signup_file:
     signup_df.columns = ["Name", "Telegram Handle", "Gender", "Year", "School", "Role", "Timeslots"]
     # row = signup_df[signup_df['Timeslots'].apply(lambda x: isinstance(x, float))]
     # print("test", row)
-    signup_df['Timeslots'] = str(signup_df['Timeslots'])
-    signup_df['Timeslots'].apply(lambda x: [item.strip() for item in x.split(',')])
+    signup_df['Timeslots'] = signup_df['Timeslots'].astype(str)
+    signup_df['Timeslots'] = signup_df['Timeslots'].apply(lambda x: [item.strip() for item in x.split(',')])
 
     signup_df["Telegram Handle"] = signup_df["Telegram Handle"].str.lower()
     signup_df['Year'] = signup_df['Year'].apply(utils.helper.calculate_year)
